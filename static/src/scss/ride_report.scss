@@ -1,0 +1,195 @@
+.o_edi_ride_openlab {
+    color: #111;
+    font-size: 8px;
+    line-height: 1.2;
+}
+
+.o_edi_ride_openlab table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.o_edi_ride_header {
+    margin-bottom: 8px;
+}
+
+.o_edi_ride_header_left {
+    width: 46%;
+    vertical-align: top;
+    padding-right: 8px;
+}
+
+.o_edi_ride_header_right {
+    width: 54%;
+    vertical-align: top;
+}
+
+.o_edi_ride_logo_box {
+    margin-bottom: 6px;
+}
+
+.o_edi_ride_logo {
+    max-width: 150px;
+    max-height: 95px;
+}
+
+.o_edi_ride_box {
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 6px 8px;
+    background: #fff;
+}
+
+.o_edi_ride_company_name,
+.o_edi_ride_doc_title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.o_edi_ride_doc_ruc {
+    font-size: 10px;
+    margin-bottom: 6px;
+}
+
+.o_edi_ride_doc_ruc strong {
+    margin-right: 20px;
+}
+
+.o_edi_ride_row_text {
+    margin-bottom: 6px;
+}
+
+.o_edi_ride_row_text strong {
+    display: inline-block;
+    min-width: 120px;
+}
+
+.o_edi_ride_row_text_stack strong,
+.o_edi_ride_row_text_stack span {
+    display: block;
+}
+
+.o_edi_ride_row_split strong {
+    min-width: 0;
+    margin-right: 8px;
+}
+
+.o_edi_ride_barcode_box {
+    margin-top: 6px;
+    text-align: center;
+}
+
+.o_edi_ride_barcode {
+    width: 100%;
+    max-width: 260px;
+    max-height: 56px;
+}
+
+.o_edi_ride_barcode_text {
+    font-size: 6px;
+}
+
+.o_edi_ride_partner_box {
+    margin-bottom: 6px;
+    padding: 0;
+}
+
+.o_edi_ride_partner_table td {
+    padding: 3px 5px;
+    vertical-align: top;
+}
+
+.o_edi_ride_partner_label {
+    white-space: nowrap;
+}
+
+.o_edi_ride_partner_value {
+    width: 100%;
+}
+
+.o_edi_ride_lines_table {
+    margin-bottom: 6px;
+}
+
+.o_edi_ride_lines_table th,
+.o_edi_ride_lines_table td,
+.o_edi_ride_simple_table th,
+.o_edi_ride_simple_table td,
+.o_edi_ride_totals_table th,
+.o_edi_ride_totals_table td {
+    border: 1px solid #444;
+    padding: 3px 4px;
+    vertical-align: top;
+    font-size: 7px;
+}
+
+.o_edi_ride_lines_table th,
+.o_edi_ride_simple_table th {
+    background: #efefef;
+    font-weight: 700;
+    text-align: center;
+}
+
+.o_col_code {
+    width: 7%;
+}
+
+.o_col_aux {
+    width: 7%;
+}
+
+.o_col_qty {
+    width: 7%;
+}
+
+.o_col_desc {
+    width: 26%;
+}
+
+.o_col_extra {
+    width: 16%;
+}
+
+.o_col_num {
+    width: 7%;
+}
+
+.o_edi_ride_section_line {
+    background: #f4f4f4;
+    font-weight: 700;
+}
+
+.o_edi_ride_note_line {
+    font-style: italic;
+}
+
+.o_edi_ride_box_title {
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3px;
+}
+
+.o_edi_ride_simple_table .o_label {
+    width: 30%;
+    white-space: nowrap;
+}
+
+.o_edi_ride_payment_table {
+    margin-top: 4px;
+}
+
+.o_edi_ride_totals_box {
+    padding: 0;
+}
+
+.o_edi_ride_totals_table .border-black td,
+.o_edi_ride_totals_table .border-black th {
+    border-top: 1px solid #444 !important;
+}
+
+.o_edi_ride_footer {
+    color: #444;
+    font-size: 6px !important;
+}

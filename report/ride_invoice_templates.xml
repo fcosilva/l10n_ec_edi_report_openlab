@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="electronic_report_common_head_openlab" inherit_id="l10n_ec_account_edi.electronic_report_common_head">
+        <xpath expr="//t[@t-set='company_logo']" position="replace">
+            <t t-set="company_logo" t-value="company.logo or company.logo_web" />
+        </xpath>
+
+        <xpath expr="//t[@t-set='style_div_company']" position="replace">
+            <t
+                t-set="style_div_company"
+                t-value="'min-height: 145px; padding-left: 20px; margin-top: 4px;'"
+            />
+        </xpath>
+
+        <xpath expr="//table[hasclass('table-no-border')]/tr/td[1]" position="attributes">
+            <attribute name="style">width: 50%; vertical-align: top;</attribute>
+        </xpath>
+
+        <xpath expr="//table[hasclass('table-no-border')]/tr/td[2]" position="attributes">
+            <attribute name="style">width: 50%; vertical-align: top;</attribute>
+        </xpath>
+
+        <xpath expr="//td[1]/t[@t-if='company_logo']/div[@class='oe_product_image']/img" position="attributes">
+            <attribute name="width" />
+            <attribute name="height">200</attribute>
+            <attribute name="style">max-width: 90%; height: 200px; width: auto; object-fit: contain; object-position: left center;</attribute>
+        </xpath>
+
+        <xpath expr="//div[hasclass('text-center') and hasclass('text-uppercase')]/strong[@t-field='company.name']" position="replace">
+            <strong
+                t-field="company.name"
+                style="font-size: 13pt;"
+            />
+        </xpath>
+
+        <xpath expr="//td[2]/div[@class='div-bordered div-radius'][1]" position="replace">
+            <div class="div-bordered div-radius" style="min-height: 368px; padding-top: 6px;">
+                <strong style="font-size: 15pt;">R.U.C.:</strong>
+                <strong t-field="company.partner_id.vat" style="font-size: 15pt;" />
+                <br />
+                <br />
+                <strong t-out="document_string" style="font-size: 13pt;" />
+                <br />
+                <span style="font-size: 13pt;">Nº.</span>
+                <span t-out="document_number" style="font-size: 14pt;" />
+                <br />
+                <br />
+                <strong>NÚMERO DE AUTORIZACION</strong>
+                <br />
+                <span t-field="edi_doc.l10n_ec_xml_access_key" />
+                <br />
+                <br />
+                <strong>FECHA Y HORA DE AUTORIZACIÓN:   </strong>
+                <span t-field="edi_doc.l10n_ec_authorization_date" style="font-size: 9pt;" />
+                <br />
+                <br />
+                <strong>AMBIENTE:</strong>
+                <span t-out="(company.l10n_ec_type_environment or '').upper()" />
+                <br />
+                <br />
+                <strong>EMISION:</strong>
+                <span t-out="'NORMAL'" />
+                <br />
+                <br />
+                <strong>CLAVE DE ACCESO:</strong>
+                <br />
+                <div class="oe_product_image text-center" t-if="edi_doc.l10n_ec_xml_access_key">
+                    <img
+                        class="barcode"
+                        t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;' % ('Code128', edi_doc.l10n_ec_xml_access_key, 360, 50)"
+                        alt="Clave de Acceso"
+                        style="max-height: 40px; width: 100%;"
+                    />
+                    <br />
+                    <span t-field="edi_doc.l10n_ec_xml_access_key" />
+                </div>
+                <br />
+            </div>
+        </xpath>
+
+    </template>
+
+    <template id="e_invoice_document_body_openlab" inherit_id="l10n_ec_account_edi.e_invoice_document_body">
+        <xpath expr="//div[hasclass('div-bordered')][1]" position="replace">
+            <div class="div-bordered" style="padding: 0;">
+                <table class="table table-sm table-no-border small" style="margin-bottom: 0;">
+                    <tbody>
+                        <tr style="font-size: 10px;">
+                            <td style="width: 20%; vertical-align: middle;">
+                                <strong style="font-size: 10px;">Razón social / Nombres y Apellidos:</strong>
+                            </td>
+                            <td style="width: 80%; text-align: left; vertical-align: middle;">
+                                <span t-out="(partner.name or '').upper()" style="font-size: 11px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="width: 100%;">
+                                <strong style="font-size: 10px;">Identificación:  </strong>
+                                <span t-field="partner.vat" style="font-size: 11px;" />
+                            </td>
+                        </tr>
+                        <tr style="font-size: 10px;">
+                            <td colspan="2" style="width: 100%;">
+                                <strong style="font-size: 10px;">Fecha de Emisión:</strong>
+                                <span t-field="o.invoice_date" style="font-size: 10px;" />
+                                <span style="display: inline-block; width: 48px;" />
+                                <strong style="font-size: 10px;">Guia de remisión:</strong>
+                            </td>
+                        </tr>
+                        <tr style="font-size: 10px;">
+                            <td colspan="2" style="width: 100%;">
+                                <strong style="font-size: 10px;">Dirección:</strong>
+                                <span
+                                    t-out="((partner.contact_address or '').replace('\n', ', ')).upper()"
+                                    style="font-size: 10px;"
+                                />
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+
+        <xpath expr="//table[hasclass('table-bordered-black')]" position="replace">
+            <table class="table table-sm table-bordered-black">
+                <thead>
+                    <tr style="font-size: 12px;background: #f1f1f1">
+                        <th name="th_cprincipal" class="amount-md">Código Principal</th>
+                        <th name="th_cant" class="amount-sm">Cantidad</th>
+                        <th name="th_descrip">Descripción</th>
+                        <th name="th_punit" class="amount-sm">Precio Unitario</th>
+                        <th name="th_dscto" class="amount-sm">Descuento</th>
+                        <th name="th_ptotal" class="amount-md">Precio Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="ordered_lines" t-as="line">
+                        <tr style="font-size: 11px;" t-if="not line.display_type or line.display_type == 'product'">
+                            <td>
+                                <span t-out="line.product_id and line.product_id.default_code or 'S/N'" />
+                            </td>
+                            <td class="text-right" style="text-align: right;">
+                                <span t-field="line.quantity" style="display: block; text-align: right;" />
+                            </td>
+                            <td>
+                                <span t-field="line.name" />
+                            </td>
+                            <td class="text-right" style="text-align: right;">
+                                <span
+                                    t-field="line.price_unit"
+                                    style="display: block; text-align: right;"
+                                    t-options='{"widget": "monetary", "display_currency": res_company.currency_id}'
+                                />
+                            </td>
+                            <td class="text-right" style="text-align: right;">
+                                <span
+                                    t-out="line.discount"
+                                    style="display: block; text-align: right;"
+                                    t-options='{"widget": "monetary", "display_currency": res_company.currency_id}'
+                                />
+                            </td>
+                            <td class="text-right" style="text-align: right;">
+                                <span
+                                    t-out="line.price_subtotal"
+                                    style="display: block; text-align: right;"
+                                    t-options='{"widget": "monetary", "display_currency": res_company.currency_id}'
+                                />
+                            </td>
+                        </tr>
+                        <tr t-if="line.display_type == 'line_section'">
+                            <td name="td_section_line" colspan="99">
+                                <span t-field="line.name" />
+                            </td>
+                        </tr>
+                        <tr t-if="line.display_type == 'line_note'">
+                            <td name="td_note_line" colspan="99">
+                                <span t-field="line.name" />
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </xpath>
+    </template>
+
+    <template
+        id="electronic_report_common_payment_info_openlab"
+        inherit_id="l10n_ec_account_edi.electronic_report_common_payment_info"
+    >
+        <xpath expr="//table[hasclass('table-bordered-black')]" position="replace">
+            <t
+                t-set="show_payment_term"
+                t-value="any((payment_line.get('plazo') or '').strip() for payment_line in payments_info)"
+            />
+            <table class="table table-sm table-bordered-black small">
+                <thead>
+                    <tr>
+                        <th
+                            style="border: 1px solid black; border-bottom: 1px solid black !important;"
+                        >Forma de Pago</th>
+                        <th
+                            class="text-center"
+                            style="border: 1px solid black; border-bottom: 1px solid black !important;"
+                        >
+                            Valor
+                        </th>
+                        <th
+                            t-if="show_payment_term"
+                            class="text-center"
+                            style="border: 1px solid black; border-bottom: 1px solid black !important;"
+                        >
+                            Plazo
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="payments_info" t-as="payment_line">
+                        <td>
+                            <span t-out="payment_line['name']" />
+                        </td>
+                        <td class="text-right amount-xl" style="text-align: right;">
+                            <span t-out="payment_line['total']" style="display: block; text-align: right;" />
+                        </td>
+                        <td t-if="show_payment_term">
+                            <span t-out="payment_line.get('plazo', '')" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </xpath>
+    </template>
+
+    <template
+        id="electronic_report_common_total_info_openlab"
+        inherit_id="l10n_ec_account_edi.electronic_report_common_total_info"
+    >
+        <xpath expr="//table[hasclass('table-bordered-black')]" position="replace">
+            <t
+                t-set="invoice_lines"
+                t-value="o.invoice_line_ids.filtered_domain([('display_type', 'not in', ['line_section', 'line_note'])])"
+            />
+            <t
+                t-set="taxes_15"
+                t-value="invoice_lines.mapped('tax_ids').filtered_domain([('l10n_ec_xml_fe_code', '=', '4')])"
+            />
+            <t
+                t-set="iva_rate_label"
+                t-value="'{:.0f}'.format(taxes_15[:1].amount or 0.0) if taxes_15 else ''"
+            />
+            <t
+                t-set="iva_group"
+                t-value="[tax for tax_group in (o.tax_totals.get('groups_by_subtotal', {}) or {}).values() for tax in tax_group if iva_rate_label and iva_rate_label in (tax.get('tax_group_name', '') or '')][:1]"
+            />
+            <t
+                t-set="subtotal_15"
+                t-value="iva_group[0].get('tax_group_base_amount', 0.0) if iva_group else sum(invoice_lines.filtered_domain([('tax_ids.l10n_ec_xml_fe_code', '=', '4')]).mapped('price_subtotal'))"
+            />
+            <t
+                t-set="subtotal_15_display"
+                t-value="iva_group[0].get('formatted_tax_group_base_amount', '') if iva_group else ''"
+            />
+            <t
+                t-set="subtotal_exento"
+                t-value="sum(invoice_lines.filtered_domain([('tax_ids.l10n_ec_xml_fe_code', '=', '7')]).mapped('price_subtotal'))"
+            />
+            <t
+                t-set="subtotal_no_objeto"
+                t-value="sum(invoice_lines.filtered_domain([('tax_ids.l10n_ec_xml_fe_code', '=', '6')]).mapped('price_subtotal'))"
+            />
+            <t
+                t-set="total_descuento"
+                t-value="sum(((line.price_unit or 0.0) * (line.quantity or 0.0) * (line.discount or 0.0) / 100.0) for line in invoice_lines)"
+            />
+            <t
+                t-set="iva_15"
+                t-value="iva_group[0].get('tax_group_amount', 0.0) if iva_group else 0.0"
+            />
+            <t
+                t-set="iva_15_display"
+                t-value="iva_group[0].get('formatted_tax_group_amount', '') if iva_group else ''"
+            />
+            <t
+                t-set="iva_label"
+                t-value="('IVA ' + iva_rate_label + '%') if iva_rate_label else 'IVA'"
+            />
+            <table class="table table-sm table-bordered-black small">
+                <tbody>
+                    <tr>
+                        <td>Subtotal 15%</td>
+                        <td class="text-right" style="text-align: right;">
+                            <t t-if="subtotal_15_display">
+                                <span t-out="subtotal_15_display" />
+                            </t>
+                            <t t-else="">
+                                <span t-out="subtotal_15" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                            </t>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Subtotal no objeto de IVA</td>
+                        <td class="text-right" style="text-align: right;">
+                            <span t-out="subtotal_no_objeto" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Subtotal exento de IVA</td>
+                        <td class="text-right" style="text-align: right;">
+                            <span t-out="subtotal_exento" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Total descuento</td>
+                        <td class="text-right" style="text-align: right;">
+                            <span t-out="total_descuento" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span t-out="iva_label" /></td>
+                        <td class="text-right" style="text-align: right;">
+                            <t t-if="iva_15_display">
+                                <span t-out="iva_15_display" />
+                            </t>
+                            <t t-else="">
+                                <span t-out="iva_15" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="background: #f1f1f1">
+                        <td><strong>Valor total</strong></td>
+                        <td class="text-right" style="text-align: right;">
+                            <strong t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </xpath>
+    </template>
+
+    <template
+        id="electronic_report_common_info_aditional_openlab"
+        inherit_id="l10n_ec_account_edi.electronic_report_common_info_aditional"
+    >
+        <xpath expr="//div[hasclass('div-bordered')]" position="replace">
+            <div class="div-bordered small">
+                <table class="table table-sm small" style="margin-bottom: 0; width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td colspan="2" style="text-align: center !important; padding: 4px 8px; vertical-align: middle;">
+                            <strong>Información Adicional</strong>
+                        </td>
+                    </tr>
+                    <tbody>
+                        
+                        <tr t-if="comment">
+                            <td style="width: 32%; border-top: none; border-bottom: none;"><strong>Comentario</strong></td>
+                            <td style="border-top: none; border-bottom: none;"><span t-out="comment" /></td>
+                        </tr>
+                        <tr
+                            t-if="partner.street or (partner.child_ids and partner.child_ids[0].street)"
+                            name="street"
+                        >
+                            <td style="width: 32%; border-top: none; border-bottom: none;"><strong>Dirección</strong></td>
+                            <td style="border-top: none; border-bottom: none;">
+                                <span
+                                    t-out="partner.street or (partner.child_ids and partner.child_ids[0].street) or ''"
+                                />
+                            </td>
+                        </tr>
+                        <tr
+                            t-if="partner.phone or (partner.child_ids and partner.child_ids[0].phone)"
+                            name="phone"
+                        >
+                            <td style="width: 32%; border-top: none; border-bottom: none;"><strong>Telefono</strong></td>
+                            <td style="border-top: none; border-bottom: none;">
+                                <span
+                                    t-out="partner.phone or (partner.child_ids and partner.child_ids[0].phone) or ''"
+                                />
+                            </td>
+                        </tr>
+                        <tr
+                            t-if="partner.email or (partner.child_ids and partner.child_ids[0].email)"
+                            name="email"
+                        >
+                            <td style="width: 32%; border-top: none; border-bottom: none;"><strong>Email</strong></td>
+                            <td style="border-top: none; border-bottom: none;">
+                                <span
+                                    t-out="partner.email or (partner.child_ids and partner.child_ids[0].email) or ''"
+                                />
+                            </td>
+                        </tr>
+                        <t t-if="'l10n_ec_additional_information_move_ids' in o">
+                            <tr
+                                t-foreach="o.l10n_ec_additional_information_move_ids"
+                                t-as="info_additional"
+                            >
+                                <td style="width: 32%; border-top: none; border-bottom: none;"><strong t-field="info_additional.name" /></td>
+                                <td style="border-top: none; border-bottom: none;"><span t-field="info_additional.description" /></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+    </template>
+</odoo>
